@@ -9,12 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // By default we get form based authentication; Now we are implementing Basic Authentication
+    // By default, we get form based authentication; Now we are implementing Basic Authentication
     // There is no way to log out from basic authentication
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests() // We must authorize requests
+                .antMatchers("/", "index", "/css/*", "/js/*") // White listing some URLs that we don't need to sign to view
+                .permitAll() // Permit the ant matcher listings
                 .anyRequest() // Any request must be authenticated
                 .authenticated() // Any request must be authenticated; User must provide details
                 .and()
