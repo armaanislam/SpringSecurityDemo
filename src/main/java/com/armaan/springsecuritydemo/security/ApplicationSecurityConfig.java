@@ -1,5 +1,6 @@
 package com.armaan.springsecuritydemo.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,11 +9,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public ApplicationSecurityConfig(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // By default, we get form based authentication; Now we are implementing Basic Authentication
     // There is no way to log out from basic authentication
@@ -33,7 +42,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected UserDetailsService userDetailsService() { // Method for defining Application User
         UserDetails armaanUser = User.builder() // User from Spring Framework Security
                 .username("armaan")
-                .password("123")
+                .password(passwordEncoder.encode("123"))
                 .roles("STUDENT") // ROLE_STUDENT
                 .build();
         return new InMemoryUserDetailsManager(
