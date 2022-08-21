@@ -15,3 +15,4 @@ List of Topics:
 13. Permission Based Authentication
 14. Disabling CSRF
 15. hasAuthority()
+16. Adding Authorities to Users

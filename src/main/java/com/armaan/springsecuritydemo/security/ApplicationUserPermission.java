@@ -1,5 +1,9 @@
 package com.armaan.springsecuritydemo.security;
 
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Set;
+
 public enum ApplicationUserPermission {
 
     STUDENT_READ("student: read"),
@@ -13,7 +17,8 @@ public enum ApplicationUserPermission {
         this.permission = permission;
     }
 
-    public String getPermission() {
+    public String getPermissions() {
         return permission;
     }
+
 }

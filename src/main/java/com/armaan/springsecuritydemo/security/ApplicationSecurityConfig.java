@@ -42,8 +42,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.name())
                 .anyRequest() // Any request must be authenticated
                 .authenticated() // Any request must be authenticated; User must provide details
-                .and()
-                .httpBasic(); // Basic authentication mechanism that is being followed to authenticate user identity
+                .and()                .httpBasic(); // Basic authentication mechanism that is being followed to authenticate user identity
     }
 
     @Override
@@ -52,19 +51,22 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails armaanUser = User.builder() // User from Spring Framework Security
                 .username("Armaan")
                 .password(passwordEncoder.encode("123"))
-                .roles(STUDENT.name()) // ROLE_STUDENT
+//                .roles(STUDENT.name()) // ROLE_STUDENT
+                .authorities(STUDENT.getGrantedAuthorities())
                 .build();
 
         UserDetails josephUser = User.builder()
                 .username("Joseph")
                 .password(passwordEncoder.encode("456"))
-                .roles(ADMIN.name()) // ROLE_ADMIN
+//                .roles(ADMIN.name()) // ROLE_ADMIN
+                .authorities(ADMIN.getGrantedAuthorities())
                 .build();
 
         UserDetails tomUser = User.builder()
                 .username("Tom")
                 .password(passwordEncoder.encode("123"))
-                .roles(ADMINTRAINEE.name()) // ROLE_ADMINTRAINEE
+//                .roles(ADMINTRAINEE.name()) // ROLE_ADMINTRAINEE
+                .authorities(ADMINTRAINEE.getGrantedAuthorities())
                 .build();
 
         return new InMemoryUserDetailsManager( // In Memory Database where all the user information is stored, the default user also remains stored here
