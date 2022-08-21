@@ -19,25 +19,25 @@ public class StudentManagementController {
     // hasRole('ROLE_') hasAnyRole('ROLE_') hasAuthority('permission') hasAnyAuthority('permission')
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_ADMINTRAINEE')") // Two ways to use permission: Ant Matchers or PreAuthorize annotations
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN',' ROLE_ADMINTRAINEE')") // Two ways to use permission: Ant Matchers or PreAuthorize annotations
     public List<Student> getAllStudents() {
         return STUDENTS;
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('student: write')")
+    @PreAuthorize("hasAuthority('student:write')")
     public void registerNewStudent(@RequestBody Student student) {
         System.out.println(student);
     }
 
     @DeleteMapping(path = "{studentId}")
-    @PreAuthorize("hasAuthority('student: write')")
+    @PreAuthorize("hasAuthority('student:write')")
     public void deleteStudent(@PathVariable("studentId") Integer studentId) {
         System.out.println("studentId = " + studentId);
     }
 
     @PutMapping(path = "{studentId}")
-    @PreAuthorize("hasAuthority('student: write')")
+    @PreAuthorize("hasAuthority('student:write')")
     public void updateStudent(@PathVariable("studentId") Integer studentId, @RequestBody Student student) {
         System.out.println(String.format("%s %s", student, student));
     }

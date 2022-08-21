@@ -19,7 +19,7 @@ import static com.armaan.springsecuritydemo.security.ApplicationUserRole.*;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) // Needed in case of Annotation based permission 
+@EnableGlobalMethodSecurity(prePostEnabled = true) // Needed in case of Annotation based permission
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -35,7 +35,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception { // Method for defining Basic Auth
         http
                 // Order matters here
-                .csrf().disable()
+//                .csrf().disable()
                 .authorizeRequests() // We must authorize requests
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll() // White listing some URLs that we don't need to sign to view // Permit the ant matcher listings
                 .antMatchers("/api/**").hasRole(STUDENT.name()) // Roles allowed for the above API
