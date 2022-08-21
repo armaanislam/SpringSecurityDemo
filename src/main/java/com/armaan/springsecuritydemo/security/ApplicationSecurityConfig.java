@@ -43,13 +43,13 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails armaanUser = User.builder() // User from Spring Framework Security
                 .username("armaan")
                 .password(passwordEncoder.encode("123"))
-                .roles("STUDENT") // ROLE_STUDENT
+                .roles(ApplicationUserRole.STUDENT.name()) // ROLE_STUDENT
                 .build();
 
         UserDetails josephUser = User.builder()
                 .username("Joseph")
                 .password(passwordEncoder.encode("456"))
-                .roles("ADMIN")
+                .roles(ApplicationUserRole.ADMIN.name())
                 .build();
 
         return new InMemoryUserDetailsManager( // In Memory Database where all the user information is stored, the default user also remains stored here
@@ -59,5 +59,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // Role: Higher level few; Role consists of many permissions
-    // Permission: Permission on specific things
+    // Permission: Permission on specific things like Read, Write, APIs
+    // An user can have multiple roles
 }
