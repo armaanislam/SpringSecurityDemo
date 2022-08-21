@@ -1,0 +1,9 @@
+List of Topics:
+
+1. Bootstrapping
+2. Running App with IntelliJ
+3. Let's build an API
+4. Installing Spring Security
+5. Form Based Authentication
+6. Basic Auth 
+7. Postman
