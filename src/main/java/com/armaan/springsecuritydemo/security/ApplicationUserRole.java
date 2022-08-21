@@ -13,7 +13,7 @@ public enum ApplicationUserRole {
     ADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, STUDENT_READ, STUDENT_WRITE)),
     ADMINTRAINEE(Sets.newHashSet(COURSE_READ, STUDENT_READ));
 
-    private final Set<ApplicationUserPermission> permissions;
+    private final Set<ApplicationUserPermission> permissions; // Calling all permissions from ApplicationUserPermission
 
     ApplicationUserRole(Set<ApplicationUserPermission> permissions) {
         this.permissions = permissions;

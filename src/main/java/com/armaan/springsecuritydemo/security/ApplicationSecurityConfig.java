@@ -36,10 +36,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // We must authorize requests
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll() // White listing some URLs that we don't need to sign to view // Permit the ant matcher listings
                 .antMatchers("/api/**").hasRole(STUDENT.name()) // Roles allowed for the above API
-                .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(COURSE_WRITE.name()) // Permissions allowed for the above API
+                .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(COURSE_WRITE.getPermissions()) // Permissions allowed for the above API
+                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(COURSE_WRITE.getPermissions())
+                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.getPermissions())
                 .antMatchers(HttpMethod.GET, "/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
-                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(COURSE_WRITE.name())
-                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.name())
                 .anyRequest() // Any request must be authenticated
                 .authenticated() // Any request must be authenticated; User must provide details
                 .and()                .httpBasic(); // Basic authentication mechanism that is being followed to authenticate user identity
@@ -79,4 +79,5 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     // Role: Higher level few; Role consists of many permissions
     // Permission: Permission on specific things like Read, Write, APIs
     // An user can have multiple roles
+    // We use authority to define permissions
 }
