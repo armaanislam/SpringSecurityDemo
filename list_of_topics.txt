@@ -12,3 +12,4 @@ List of Topics:
 10. Password Encoding with Bcrypt
 11. Roles and Permissions using Enums
 12. Role Based Authentication
+13. Permission Based Authentication

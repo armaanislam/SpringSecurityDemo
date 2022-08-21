@@ -43,7 +43,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean // To instantiate this method
     protected UserDetailsService userDetailsService() { // Method for defining Application User
         UserDetails armaanUser = User.builder() // User from Spring Framework Security
-                .username("armaan")
+                .username("Armaan")
                 .password(passwordEncoder.encode("123"))
                 .roles(ApplicationUserRole.STUDENT.name()) // ROLE_STUDENT
                 .build();
@@ -51,12 +51,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails josephUser = User.builder()
                 .username("Joseph")
                 .password(passwordEncoder.encode("456"))
-                .roles(ApplicationUserRole.ADMIN.name())
+                .roles(ApplicationUserRole.ADMIN.name()) // ROLE_ADMIN
+                .build();
+
+        UserDetails tomUser = User.builder()
+                .username("Tom")
+                .password(passwordEncoder.encode("123"))
+                .roles(ApplicationUserRole.ADMINTRAINEE.name()) // ROLE_ADMINTRAINEE
                 .build();
 
         return new InMemoryUserDetailsManager( // In Memory Database where all the user information is stored, the default user also remains stored here
                 armaanUser,
-                josephUser
+                josephUser,
+                tomUser
         );
     }
 
