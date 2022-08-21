@@ -45,8 +45,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .password(passwordEncoder.encode("123"))
                 .roles("STUDENT") // ROLE_STUDENT
                 .build();
-        return new InMemoryUserDetailsManager(
-                armaanUser
+
+        UserDetails josephUser = User.builder()
+                .username("Joseph")
+                .password(passwordEncoder.encode("456"))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager( // In Memory Database where all the user information is stored, the default user also remains stored here
+                armaanUser,
+                josephUser
         );
     }
+
+    // Role: Higher level few; Role consists of many permissions
+    // Permission: Permission on specific things
 }
