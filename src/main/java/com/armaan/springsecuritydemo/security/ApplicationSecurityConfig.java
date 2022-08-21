@@ -28,6 +28,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception { // Method for defining Basic Auth
         http
+                .csrf().disable()
                 .authorizeRequests() // We must authorize requests
                 .antMatchers("/", "index", "/css/*", "/js/*") // White listing some URLs that we don't need to sign to view
                 .permitAll() // Permit the ant matcher listings
