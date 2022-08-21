@@ -3,6 +3,7 @@ package com.armaan.springsecuritydemo.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import static com.armaan.springsecuritydemo.security.ApplicationUserPermission.*;
+import static com.armaan.springsecuritydemo.security.ApplicationUserRole.*;
 
 @Configuration
 @EnableWebSecurity
@@ -30,10 +34,12 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests() // We must authorize requests
-                .antMatchers("/", "index", "/css/*", "/js/*") // White listing some URLs that we don't need to sign to view
-                .permitAll() // Permit the ant matcher listings
-                .antMatchers("/api/**")
-                .hasRole(ApplicationUserRole.STUDENT.name()) // Roles allowed for the above API
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll() // White listing some URLs that we don't need to sign to view // Permit the ant matcher listings
+                .antMatchers("/api/**").hasRole(STUDENT.name()) // Roles allowed for the above API
+                .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(COURSE_WRITE.name()) // Permissions allowed for the above API
+                .antMatchers(HttpMethod.GET, "/management/api/**").hasAnyRole(ADMIN.name(), ADMINTRAINEE.name())
+                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(COURSE_WRITE.name())
+                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.name())
                 .anyRequest() // Any request must be authenticated
                 .authenticated() // Any request must be authenticated; User must provide details
                 .and()
@@ -46,19 +52,19 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails armaanUser = User.builder() // User from Spring Framework Security
                 .username("Armaan")
                 .password(passwordEncoder.encode("123"))
-                .roles(ApplicationUserRole.STUDENT.name()) // ROLE_STUDENT
+                .roles(STUDENT.name()) // ROLE_STUDENT
                 .build();
 
         UserDetails josephUser = User.builder()
                 .username("Joseph")
                 .password(passwordEncoder.encode("456"))
-                .roles(ApplicationUserRole.ADMIN.name()) // ROLE_ADMIN
+                .roles(ADMIN.name()) // ROLE_ADMIN
                 .build();
 
         UserDetails tomUser = User.builder()
                 .username("Tom")
                 .password(passwordEncoder.encode("123"))
-                .roles(ApplicationUserRole.ADMINTRAINEE.name()) // ROLE_ADMINTRAINEE
+                .roles(ADMINTRAINEE.name()) // ROLE_ADMINTRAINEE
                 .build();
 
         return new InMemoryUserDetailsManager( // In Memory Database where all the user information is stored, the default user also remains stored here

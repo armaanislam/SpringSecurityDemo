@@ -13,3 +13,5 @@ List of Topics:
 11. Roles and Permissions using Enums
 12. Role Based Authentication
 13. Permission Based Authentication
+14. Disabling CSRF
+15. hasAuthority()
